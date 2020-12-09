@@ -1,0 +1,109 @@
+<!DOCTYPEhtml>
+<html>
+    <head>
+        <title>Canvas</title>
+        <meta charset="utf8">
+        <link rel="styleSheet" href="canva.css">
+    </head>
+    <body onload="initialisations()">
+        <canvas id="canva1" width="400" height="400" style="border: 1px black solid;" onclick="gere_clic(event)"></canvas>
+    </br>
+        <button onclick="c0()" style="background-color: blue; color: white;">Blue</button>
+        <button onclick="c1()" style="background-color:green;color: white;";>Green</button>
+        <button onclick="c2()" style="background-color: black;color: white;">Black</button>
+        <button onclick="c3()"style="background-color: gray;color: white;">Gray</button>
+        <button onclick="c4()" style="background-color: rebeccapurple;color: white;">Rebec</button>
+        <button onclick="choisir_circle()">Circle</button>
+        <button onclick="choisir_carre()">Carre</button>
+        <button onclick="hasard()">Hasard</button>
+        <button onclick="stop()">Stop</button>
+        <script>
+            var tab_couleur = ["blue","green","black","gray","rebeccapurple","orange","yellow","red","brown"];         
+            var canvas = document.getElementById('canva1');
+            var context = canvas.getContext('2d');
+            var flag = 0;
+            function hasard() {
+                // for (var i = 0; i < 1000; i++) {
+                    var n = Math.floor(Math.random() *400);
+                    var m = Math.floor(Math.random() *400);
+                    var h = Math.floor(Math.random() *tab_couleur.length);
+                    context.fillStyle = tab_couleur[h];
+                    context.fillRect(n,m,10,10);
+                // }
+            }
+            var ha = setInterval(hasard, 30);
+            function stop(){
+                clearInterval(ha);
+            }
+            function choisir_circle() {
+                flag = 1;
+            }
+
+            function choisir_carre() {
+                flag = 0;
+            }
+
+            function carre(context,x,y,l) {
+                context.fillStyle;
+                context.fillRect(x,y,l,l);
+            }  
+            function c0 () {
+                context.fillStyle = tab_couleur[0];
+            }
+            function c1 () {
+                context.fillStyle = tab_couleur[1];
+            }
+            function c2 () {
+                context.fillStyle = tab_couleur[2];
+            }
+            function c3 () {
+                context.fillStyle = tab_couleur[3];
+            }
+            function c4 () {
+                context.fillStyle = tab_couleur[4];
+            }
+
+            function cicrle (context,x,y,r,sta,sto) {
+                context.beginPath();
+                context.arc(x,y,r,sta,sto);
+                context.stroke();
+            }
+           
+            function line(context,x,y,z,j) {
+                context.beginPath();
+                context.moveTo(x,y);
+                context.lineTo(z,j);
+                context.stroke();
+            }
+            function text(context,z,h,texte,x,y) {
+                context.font="20px Comic";
+                context.textAlign = z;
+                context.fillStyle = h;
+                context.fillText(texte, x, y); 
+                // 100 = x; 250 = y                
+            }
+            function initialisations() {
+                var canvas = document.getElementById('canva1');
+                var context = canvas.getContext('2d');
+                // carre(context,0,0,50,"red");
+                // carre(context,10,80, 200, 50,"cyan");
+                // cicrle(context,80,200,50,0,10 * Math.PI);
+                // line(context,0,0,200,100);
+                // text(context,"center","red","Hello Thuy",100,300);
+            }
+            function coordonnes(e) {
+                var canvas = document.getElementById('canva1');
+                var context = canvas.getContext('2d');
+                var x = e.pageX -canvas.offsetLeft;
+                var y = e.pageY -canvas.offsetTop;
+                if (flag == 0)
+                    carre(context,x,y,10,10)
+                else
+                    cicrle(context,x,y,10,0,10 * Math.PI);
+            }
+        document.getElementById('canva1').addEventListener('click',(function(e) {
+            coordonnes(e);
+        }));
+        </script>
+    </body>
+</html>
